@@ -1,4 +1,4 @@
-const ASTNode = require('./ast');
+const ASTNode = require('./underConstruction/ast');
 
 class Parser {
   constructor(tokens) {
