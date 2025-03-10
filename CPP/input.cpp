@@ -1,15 +1,16 @@
-// Program to test various features of the compiler
-int a = 10;         // Simple integer declaration with initialization
-int b;              // Integer declaration without initialization
-char c = 'x';       // Character declaration with initialization
-char d;             // Character declaration without initialization
+// input to test the compiler
+int a = 10;         // initialization
+int b;              // declaration
+char c = 'x';       // initialization
+char d;             // declaration
 
-/* Multi-line comment explaining the next section
-   This tests arithmetic operations and assignments */
-b = a + 3 * 2 - 8 / 4;  // Complex arithmetic expression with precedence
-int e = b + 5;          // Using a previously assigned variable
+/* Multi
+   Line
+   Comment */
+b = a + 3 * 2 - 8 / 4;  // complex expression
+int e = b + 5;          // reassigning a variable
 
-// Assigning a char to another char variable
-d = c;                  // Valid char-to-char assignment
+// assigning
+d = c;                  // valid assignment
 
-int f = e * 2 + a - b;  // Another arithmetic operation using multiple variables
+int f = e * 2 + a - b;  // inline comment for complex assignment
