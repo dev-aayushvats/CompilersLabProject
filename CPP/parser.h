@@ -29,7 +29,6 @@ public:
             std::cout << "===== Abstract Syntax Tree (AST) =====\n";
         }
 
-        // Print current node
         std::string indent = level == 0 ? "" : prefix + (isLast ? "└── " : "├── ");
         std::cout << indent << type;
         if (!value.empty()) {
@@ -37,10 +36,7 @@ public:
         }
         std::cout << "\n";
 
-        // Update prefix for children
         std::string newPrefix = level == 0 ? "" : prefix + (isLast ? "    " : "│   ");
-
-        // Print children
         for (size_t i = 0; i < children.size(); ++i) {
             bool childIsLast = (i == children.size() - 1);
             children[i]->print(level + 1, childIsLast, newPrefix);
@@ -101,6 +97,10 @@ private:
         Token token = tokens[pos++];
         if (token.type == "NUMBER") {
             return new ASTNode("NUMBER", token.value);
+        } else if (token.type == "CHAR") {
+            return new ASTNode("CHAR", token.value);
+        } else if (token.type == "STRING") {
+            return new ASTNode("STRING", token.value);
         } else if (token.type == "IDENTIFIER") {
             if (pos < tokens.size() && tokens[pos].type == "EQUALS") {
                 pos++; // Skip '='
@@ -120,13 +120,14 @@ public:
     ASTNode* parse() {
         std::vector<ASTNode*> statements;
         while (pos < tokens.size()) {
-            if (tokens[pos].type == "INT") {
-                pos++; // Skip 'int'
+            if (tokens[pos].type == "INT" || tokens[pos].type == "CHAR_TYPE") {
+                std::string varType = tokens[pos].type; // "INT" or "CHAR_TYPE"
+                pos++; // Skip 'int' or 'char'
                 std::string varName = tokens[pos++].value;
                 consume("EQUALS");
                 ASTNode* expr = parseExpression();
                 consume("SEMICOLON");
-                ASTNode* decl = new ASTNode("DECLARATION", varName);
+                ASTNode* decl = new ASTNode("DECLARATION_" + varType, varName);
                 decl->addChild(expr);
                 statements.push_back(decl);
             } else if (tokens[pos].type == "IDENTIFIER") {

@@ -28,13 +28,11 @@ private:
         while (pos < input.length()) {
             char current = input[pos];
 
-            // Skip whitespace within a line
             if (isWhitespace(current)) {
                 pos++;
                 continue;
             }
 
-            // Single-line comment (//)
             if (current == '/' && pos + 1 < input.length() && input[pos + 1] == '/') {
                 while (pos < input.length() && input[pos] != '\n') {
                     pos++;
@@ -43,7 +41,6 @@ private:
                 continue;
             }
 
-            // Multi-line comment (/* */)
             if (current == '/' && pos + 1 < input.length() && input[pos + 1] == '*') {
                 pos += 2;
                 while (pos + 1 < input.length() && !(input[pos] == '*' && input[pos + 1] == '/')) {
@@ -53,13 +50,11 @@ private:
                 continue;
             }
 
-            // Empty line (just a newline)
             if (current == '\n') {
                 pos++;
                 continue;
             }
 
-            // If we reach a non-comment, non-empty character, stop skipping
             break;
         }
     }
@@ -77,13 +72,44 @@ public:
 
             char current = input[pos];
 
+            // Character literal (e.g., 'a')
+            if (current == '\'') {
+                std::string value;
+                pos++; // Skip opening quote
+                if (pos >= input.length()) {
+                    throw std::runtime_error("Unterminated character literal");
+                }
+                value += input[pos++]; // Take one character
+                if (pos >= input.length() || input[pos] != '\'') {
+                    throw std::runtime_error("Expected closing single quote for character literal");
+                }
+                pos++; // Skip closing quote
+                tokens.push_back(Token("CHAR", value));
+                continue;
+            }
+
+            // String literal (e.g., "hello")
+            if (current == '"') {
+                std::string value;
+                pos++; // Skip opening quote
+                while (pos < input.length() && input[pos] != '"') {
+                    value += input[pos++];
+                }
+                if (pos >= input.length()) {
+                    throw std::runtime_error("Unterminated string literal");
+                }
+                pos++; // Skip closing quote
+                tokens.push_back(Token("STRING", value));
+                continue;
+            }
+
             if (isAlpha(current)) {
                 std::string value;
                 while (pos < input.length() && (isAlpha(input[pos]) || isDigit(input[pos]))) {
                     value += input[pos++];
                 }
-                if (value == "int") {
-                    tokens.push_back(Token("INT", value));
+                if (value == "int" || value == "char") { // Added "char" as a keyword
+                    tokens.push_back(Token(value == "int" ? "INT" : "CHAR_TYPE", value));
                 } else {
                     tokens.push_back(Token("IDENTIFIER", value));
                 }
