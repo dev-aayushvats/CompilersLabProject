@@ -124,11 +124,13 @@ public:
                 std::string varType = tokens[pos].type; // "INT" or "CHAR_TYPE"
                 pos++; // Skip 'int' or 'char'
                 std::string varName = tokens[pos++].value;
-                consume("EQUALS");
-                ASTNode* expr = parseExpression();
-                consume("SEMICOLON");
                 ASTNode* decl = new ASTNode("DECLARATION_" + varType, varName);
-                decl->addChild(expr);
+                if (pos < tokens.size() && tokens[pos].type == "EQUALS") {
+                    pos++; // Skip '='
+                    ASTNode* expr = parseExpression();
+                    decl->addChild(expr);
+                }
+                consume("SEMICOLON");
                 statements.push_back(decl);
             } else if (tokens[pos].type == "IDENTIFIER") {
                 ASTNode* assign = parseFactor();
