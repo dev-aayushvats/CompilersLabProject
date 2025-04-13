@@ -108,7 +108,7 @@ public:
                 while (pos < input.length() && (isAlpha(input[pos]) || isDigit(input[pos]))) {
                     value += input[pos++];
                 }
-                if (value == "int" || value == "char") { // Added "char" as a keyword
+                if (value == "int" || value == "char") {
                     tokens.push_back(Token(value == "int" ? "INT" : "CHAR_TYPE", value));
                 } else {
                     tokens.push_back(Token("IDENTIFIER", value));
@@ -132,7 +132,7 @@ public:
                 case '/': tokens.push_back(Token("DIV", "/")); pos++; break;
                 case '=': tokens.push_back(Token("EQUALS", "=")); pos++; break;
                 case ';': tokens.push_back(Token("SEMICOLON", ";")); pos++; break;
-                default: pos++; // Skip unrecognized characters
+                default: pos++;
             }
         }
 

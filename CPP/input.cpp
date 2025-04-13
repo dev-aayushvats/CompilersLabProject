@@ -9,8 +9,3 @@ char d;             // declaration
    Comment */
 b = a + 3 * 2 - 8 / 4;  // complex expression
 int e = b + 5;          // reassigning a variable
-
-// assigning
-d = c;                  // valid assignment
-
-int f = e * 2 + a - b;  // inline comment for complex assignment
