@@ -1,0 +1,9 @@
+Enter number of productions: 6
+Note: Please enter productions with spaces between symbols (e.g., S -> A B C).
+Enter productions (e.g., S -> A B):
+E -> E + T
+E -> T
+T -> T * F
+T -> F
+F -> ( E )
+F -> id

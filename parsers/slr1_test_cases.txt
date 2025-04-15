@@ -1,0 +1,138 @@
+Enter number of productions: 5
+Note: Please enter productions with spaces between symbols (e.g., S -> A B C).
+Enter productions (e.g., S -> A B):
+S -> L = R
+S -> R
+L -> * R
+L -> id
+R -> L
+Conflict at state 2 on symbol '=': r5 vs s8
+
+Item Sets (States):
+
+State 0:
+L -> . * R
+L -> . id
+R -> . L
+S -> . L = R
+S -> . R
+S' -> . S
+
+State 1:
+L -> . * R
+L -> * . R 
+L -> . id
+R -> . L
+
+State 2:
+R -> L .
+S -> L . = R
+
+State 3:
+S -> R .
+
+State 4:
+S' -> S .
+
+State 5:
+L -> id .
+
+State 6:
+R -> L .
+
+State 7:
+L -> * R .
+
+State 8:
+L -> . * R
+L -> . id
+R -> . L
+S -> L = . R
+
+State 9:
+S -> L = R .
+
+SLR(1) Parsing Table:
+State   $       *       =       id      L       R       S
+------------------------------------------------------
+0               s1              s5      2       3       4
+1               s1              s5      6       7
+2       r5              s8
+3       r2
+4       acc
+5       r4              r4
+6       r5              r5
+7       r3              r3
+8               s1              s5      6       9
+9       r1
+
+Grammar has shift/reduce conflicts.
+
+Enter input string (tokens separated by space): id = id
+Accepted!
+
+Enter input string (tokens separated by space): id id
+Rejected!
+
+
+
+
+
+
+
+
+
+
+
+
+
+Enter number of productions: 3
+Note: Please enter productions with spaces between symbols (e.g., S -> A B C).
+Enter productions (e.g., S -> A B):
+E -> B B 
+B -> c B
+B -> d
+
+Item Sets (States):
+
+State 0:
+B -> . c B
+B -> . d
+E -> . B B
+S' -> . E
+
+State 1:
+B -> . c B
+B -> . d
+E -> B . B
+
+State 2:
+S' -> E .
+
+State 3:
+B -> . c B
+B -> c . B
+B -> . d
+
+State 4:
+B -> d .
+
+State 5:
+E -> B B .
+
+State 6:
+B -> c B .
+
+SLR(1) Parsing Table:
+State   $       c       d       B       E
+------------------------------------------------------
+0               s3      s4      1       2
+1               s3      s4      5
+2       acc
+3               s3      s4      6
+4       r3      r3      r3
+5       r1
+6       r2      r2      r2
+
+Enter input string (tokens separated by space): d c d
+Accepted!
