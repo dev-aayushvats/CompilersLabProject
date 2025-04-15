@@ -1,0 +1,49 @@
+Enter number of productions: 2
+Enter productions (e.g., S -> A B):
+S -> a A
+A -> b
+Enter input string (tokens separated by space): a b
+
+
+Item Sets (States):
+
+State 0:
+S' -> . S , $
+S -> . a A , $
+
+State 1:
+S' -> S ., $
+
+State 2:
+A -> . b , $
+S -> a . A , $
+
+State 3:
+S -> a A ., $
+
+State 4:
+A -> b ., $
+
+LALR(1) Parsing Table:
+State   $       a       b       A       S
+------------------------------------------------------
+0               s2                      1
+1       acc
+2                       s4      3
+3       r1
+4       r2
+
+Accepted!
+
+
+Input Strings:
+a b -> accepted
+a b $ -> accepted
+a   b -> accepted
+a a -> Rejected
+(Empty) -> Rejected
+a
+a b b
+a c 
+a b a b             =========>>>>> all rejected
+b a 
